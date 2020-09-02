@@ -12,13 +12,12 @@ package main
 
 import (
 	"fmt"
-	"module-3/arrstr"
-	"module-3/request"
+	"github.com/mykhailovozniak/module-3/arrstr"
+	"github.com/mykhailovozniak/module-3/request"
 	"os"
 	"strings"
 )
 
-// This function check if url starts schema is correct
 func checkUrl()  {
 	url := os.Args[1]
 	validProtocolScheme := strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://")
@@ -29,15 +28,13 @@ func checkUrl()  {
 	}
 }
 
-// This function check if user pass only allowed method types
 func checkMethodType()  {
 	hasMethodArg := len(os.Args) == 3
 
-	allowedMethods := [3]string{"get", "post", "head"}
+	allowedMethods := []string{"get", "post", "head"}
 
 	if hasMethodArg {
 		method := os.Args[2]
-		fmt.Println("PERFORM CHECK")
 		allowedMethod := arrstr.ContainsString(allowedMethods[:], method)
 
 		if !allowedMethod {
@@ -47,8 +44,7 @@ func checkMethodType()  {
 	}
 }
 
-// This function check input from shell
-func init() {
+func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Usage: gocurl <url:required> <method:not required>")
 		os.Exit(1)
@@ -56,10 +52,7 @@ func init() {
 
 	checkUrl()
 	checkMethodType()
-}
 
-// This is main functiom
-func main() {
 	if len(os.Args) == 2 {
 		url := os.Args[1]
 		res, err := request.Request("", url)
